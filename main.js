@@ -12,20 +12,20 @@ botoes.forEach((botao, i) => {
   });
 });
 
-// DATAS CORRETAS DOS OBJETIVOS
+// DATAS CORRETAS
 const tempos = [
-  new Date("2026-04-11T00:00:00"), // mudar de casa
-  new Date("2027-01-01T00:00:00"), // vestibular
-  new Date("2026-12-18T00:00:00"), // terminar ensino médio
-  new Date("2026-12-31T00:00:00")  // organizar financeiramente
+  new Date("2026-04-11T00:00:00"),
+  new Date("2027-01-01T00:00:00"),
+  new Date("2026-12-18T00:00:00"),
+  new Date("2026-12-31T00:00:00")
 ];
 
-// FORMATAÇÃO (02, 03, etc)
+// FORMATAR (01, 02...)
 function formatar(n) {
   return n.toString().padStart(2, "0");
 }
 
-// FUNÇÃO DE TEMPO
+// CALCULAR TEMPO
 function calculaTempo(data) {
   const agora = new Date();
   const diff = data - agora;
@@ -44,7 +44,7 @@ function calculaTempo(data) {
   return [d, h, m, s];
 }
 
-// ATUALIZA CONTADOR
+// ATUALIZAR
 function atualizar() {
   tempos.forEach((tempo, i) => {
     const [d, h, m, s] = calculaTempo(tempo);

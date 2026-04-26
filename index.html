@@ -1,61 +1,91 @@
-const botoes = document.querySelectorAll(".botao");
-const abas = document.querySelectorAll(".aba-conteudo");
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meus Objetivos</title>
 
-// TROCA DE ABAS
-botoes.forEach((botao, i) => {
-  botao.addEventListener("click", () => {
-    botoes.forEach(b => b.classList.remove("ativo"));
-    abas.forEach(a => a.classList.remove("ativo"));
+  <!-- FONTE -->
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;600&display=swap" rel="stylesheet">
 
-    botao.classList.add("ativo");
-    abas[i].classList.add("ativo");
-  });
-});
+  <link rel="stylesheet" href="style.css">
+</head>
 
-// DATAS CORRETAS DOS OBJETIVOS
-const tempos = [
-  new Date("2026-04-11T00:00:00"), // mudar de casa
-  new Date("2027-01-01T00:00:00"), // vestibular
-  new Date("2026-12-18T00:00:00"), // terminar ensino médio
-  new Date("2026-12-31T00:00:00")  // organizar financeiramente
-];
+<body>
+  <main class="conteudo-principal">
 
-// FORMATAÇÃO (02, 03, etc)
-function formatar(n) {
-  return n.toString().padStart(2, "0");
-}
+    <h2 class="titulo-principal">
+      Meus Objetivos <span>_</span>
+    </h2>
 
-// FUNÇÃO DE TEMPO
-function calculaTempo(data) {
-  const agora = new Date();
-  const diff = data - agora;
+    <!-- BOTÕES -->
+    <div class="botoes">
+      <button class="botao ativo">Mudar de casa</button>
+      <button class="botao">Vestibular</button>
+      <button class="botao">Ensino Médio</button>
+      <button class="botao">Financeiro</button>
+    </div>
 
-  if (diff <= 0) return [0, 0, 0, 0];
+    <!-- ABAS -->
+    <div class="abas-textos">
 
-  let s = Math.floor(diff / 1000);
-  let m = Math.floor(s / 60);
-  let h = Math.floor(m / 60);
-  let d = Math.floor(h / 24);
+      <!-- ABA 0 -->
+      <div class="aba-conteudo ativo">
+        <h3>Mudar de casa</h3>
+        <h4>Tempo restante</h4>
 
-  s %= 60;
-  m %= 60;
-  h %= 24;
+        <div class="contador">
+          <div class="contador-digito"><p id="dias0">00</p><span>dias</span></div>
+          <div class="contador-digito"><p id="horas0">00</p><span>horas</span></div>
+          <div class="contador-digito"><p id="min0">00</p><span>min</span></div>
+          <div class="contador-digito"><p id="seg0">00</p><span>seg</span></div>
+        </div>
+      </div>
 
-  return [d, h, m, s];
-}
+      <!-- ABA 1 -->
+      <div class="aba-conteudo">
+        <h3>Passar no vestibular</h3>
+        <h4>Tempo restante</h4>
 
-// ATUALIZA CONTADOR
-function atualizar() {
-  tempos.forEach((tempo, i) => {
-    const [d, h, m, s] = calculaTempo(tempo);
+        <div class="contador">
+          <div class="contador-digito"><p id="dias1">00</p><span>dias</span></div>
+          <div class="contador-digito"><p id="horas1">00</p><span>horas</span></div>
+          <div class="contador-digito"><p id="min1">00</p><span>min</span></div>
+          <div class="contador-digito"><p id="seg1">00</p><span>seg</span></div>
+        </div>
+      </div>
 
-    document.getElementById(`dias${i}`).textContent = formatar(d);
-    document.getElementById(`horas${i}`).textContent = formatar(h);
-    document.getElementById(`min${i}`).textContent = formatar(m);
-    document.getElementById(`seg${i}`).textContent = formatar(s);
-  });
-}
+      <!-- ABA 2 -->
+      <div class="aba-conteudo">
+        <h3>Terminar o ensino médio</h3>
+        <h4>Tempo restante</h4>
 
-// LOOP
-setInterval(atualizar, 1000);
-atualizar();
+        <div class="contador">
+          <div class="contador-digito"><p id="dias2">00</p><span>dias</span></div>
+          <div class="contador-digito"><p id="horas2">00</p><span>horas</span></div>
+          <div class="contador-digito"><p id="min2">00</p><span>min</span></div>
+          <div class="contador-digito"><p id="seg2">00</p><span>seg</span></div>
+        </div>
+      </div>
+
+      <!-- ABA 3 -->
+      <div class="aba-conteudo">
+        <h3>Me organizar financeiramente</h3>
+        <h4>Tempo restante</h4>
+
+        <div class="contador">
+          <div class="contador-digito"><p id="dias3">00</p><span>dias</span></div>
+          <div class="contador-digito"><p id="horas3">00</p><span>horas</span></div>
+          <div class="contador-digito"><p id="min3">00</p><span>min</span></div>
+          <div class="contador-digito"><p id="seg3">00</p><span>seg</span></div>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- IMPORTANTE: DEFER -->
+  <script src="main.js" defer></script>
+</body>
+</html>
