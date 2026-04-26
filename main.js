@@ -12,15 +12,15 @@ botoes.forEach((botao, i) => {
   });
 });
 
-// DATAS CORRETAS
+// 🔥 DATAS NO FUSO LOCAL (SEM BUG)
 const tempos = [
-  new Date("2026-04-11T00:00:00"),
-  new Date("2027-01-01T00:00:00"),
-  new Date("2026-12-18T00:00:00"),
-  new Date("2026-12-31T00:00:00")
+  new Date(2026, 3, 11, 0, 0, 0), // 11/04/2026
+  new Date(2027, 0, 1, 0, 0, 0),  // 01/01/2027
+  new Date(2026, 11, 18, 0, 0, 0),// 18/12/2026
+  new Date(2026, 11, 31, 0, 0, 0) // 31/12/2026
 ];
 
-// FORMATAR (01, 02...)
+// FORMATAR
 function formatar(n) {
   return n.toString().padStart(2, "0");
 }
@@ -28,20 +28,22 @@ function formatar(n) {
 // CALCULAR TEMPO
 function calculaTempo(data) {
   const agora = new Date();
-  const diff = data - agora;
+  let diff = data.getTime() - agora.getTime();
 
   if (diff <= 0) return [0, 0, 0, 0];
 
-  let s = Math.floor(diff / 1000);
-  let m = Math.floor(s / 60);
-  let h = Math.floor(m / 60);
-  let d = Math.floor(h / 24);
+  const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
+  diff -= dias * (1000 * 60 * 60 * 24);
 
-  s %= 60;
-  m %= 60;
-  h %= 24;
+  const horas = Math.floor(diff / (1000 * 60 * 60));
+  diff -= horas * (1000 * 60 * 60);
 
-  return [d, h, m, s];
+  const minutos = Math.floor(diff / (1000 * 60));
+  diff -= minutos * (1000 * 60);
+
+  const segundos = Math.floor(diff / 1000);
+
+  return [dias, horas, minutos, segundos];
 }
 
 // ATUALIZAR
@@ -56,6 +58,5 @@ function atualizar() {
   });
 }
 
-// LOOP
 setInterval(atualizar, 1000);
 atualizar();
