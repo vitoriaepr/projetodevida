@@ -16,10 +16,10 @@ botoes.forEach((botao, i) => {
 
 // DATAS DOS OBJETIVOS
 const tempos = [
-  new Date("2026-04-27"),
-  new Date("2026-10-01"),
-  new Date("2026-08-01"),
-  new Date("2026-06-01")
+  new Date("2026-05-11"),
+  new Date("2026-12-18"),
+  new Date("2027-01-01"),
+  new Date("2026-12-31")
 ];
 
 // FUNÇÃO DE TEMPO
