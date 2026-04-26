@@ -1,98 +1,61 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Meus objetivos do ano</title>
-  <link rel="stylesheet" href="style.css">
-</head>
+const botoes = document.querySelectorAll(".botao");
+const abas = document.querySelectorAll(".aba-conteudo");
 
-<body>
-  <main class="conteudo-principal">
+// TROCA DE ABAS
+botoes.forEach((botao, i) => {
+  botao.addEventListener("click", () => {
+    botoes.forEach(b => b.classList.remove("ativo"));
+    abas.forEach(a => a.classList.remove("ativo"));
 
-    <h2 class="titulo-principal">
-      Meus Objetivos do Ano <span>_</span>
-    </h2>
+    botao.classList.add("ativo");
+    abas[i].classList.add("ativo");
+  });
+});
 
-    <!-- BOTÕES -->
-    <div class="botoes">
-      <button class="botao ativo">Me mudar de casa </button>
-      <button class="botao">Terminar o ensino médio </button>
-      <button class="botao">Passar no vestibular </button>
-      <button class="botao">Me organizar financeiramente</button>
-    </div>
+// DATAS CORRETAS DOS OBJETIVOS
+const tempos = [
+  new Date("2026-04-11T00:00:00"), // mudar de casa
+  new Date("2027-01-01T00:00:00"), // vestibular
+  new Date("2026-12-18T00:00:00"), // terminar ensino médio
+  new Date("2026-12-31T00:00:00")  // organizar financeiramente
+];
 
-    <!-- ABAS -->
-    <div class="abas-textos">
+// FORMATAÇÃO (02, 03, etc)
+function formatar(n) {
+  return n.toString().padStart(2, "0");
+}
 
-      <!-- ABA 0 -->
-      <div class="aba-conteudo ativo">
-        <h3>Me mudar de casa </h3>
-        <h4>Tempo para completar o objetivo</h4>
+// FUNÇÃO DE TEMPO
+function calculaTempo(data) {
+  const agora = new Date();
+  const diff = data - agora;
 
-        <div class="contador">
-          <div class="contador-digito">
-            <p id="dias0">0</p>
-            <span>dias</span>
-          </div>
-          <div class="contador-digito">
-            <p id="horas0">0</p>
-            <span>horas</span>
-          </div>
-          <div class="contador-digito">
-            <p id="min0">0</p>
-            <span>min</span>
-          </div>
-          <div class="contador-digito">
-            <p id="seg0">0</p>
-            <span>seg</span>
-          </div>
-        </div>
-      </div>
+  if (diff <= 0) return [0, 0, 0, 0];
 
-      <!-- ABA 1 -->
-      <div class="aba-conteudo">
-        <h3>Terminar o ensino médio </h3>
-        <h4>Tempo para completar o objetivo</h4>
+  let s = Math.floor(diff / 1000);
+  let m = Math.floor(s / 60);
+  let h = Math.floor(m / 60);
+  let d = Math.floor(h / 24);
 
-        <div class="contador">
-          <div class="contador-digito"><p id="dias1"></p><span>dias</span></div>
-          <div class="contador-digito"><p id="horas1"></p><span>horas</span></div>
-          <div class="contador-digito"><p id="min1"></p><span>min</span></div>
-          <div class="contador-digito"><p id="seg1"></p><span>seg</span></div>
-        </div>
-      </div>
+  s %= 60;
+  m %= 60;
+  h %= 24;
 
-      <!-- ABA 2 -->
-      <div class="aba-conteudo">
-        <h3>Passar no vestibular </h3>
-        <h4>Tempo para completar o objetivo</h4>
+  return [d, h, m, s];
+}
 
-        <div class="contador">
-          <div class="contador-digito"><p id="dias2"></p><span>dias</span></div>
-          <div class="contador-digito"><p id="horas2"></p><span>horas</span></div>
-          <div class="contador-digito"><p id="min2"></p><span>min</span></div>
-          <div class="contador-digito"><p id="seg2"></p><span>seg</span></div>
-        </div>
-      </div>
+// ATUALIZA CONTADOR
+function atualizar() {
+  tempos.forEach((tempo, i) => {
+    const [d, h, m, s] = calculaTempo(tempo);
 
-      <!-- ABA 3 -->
-      <div class="aba-conteudo">
-        <h3>Me organizar financeiramente</h3>
-        <h4>Tempo para completar o objetivo</h4>
+    document.getElementById(`dias${i}`).textContent = formatar(d);
+    document.getElementById(`horas${i}`).textContent = formatar(h);
+    document.getElementById(`min${i}`).textContent = formatar(m);
+    document.getElementById(`seg${i}`).textContent = formatar(s);
+  });
+}
 
-        <div class="contador">
-          <div class="contador-digito"><p id="dias3"></p><span>dias</span></div>
-          <div class="contador-digito"><p id="horas3"></p><span>horas</span></div>
-          <div class="contador-digito"><p id="min3"></p><span>min</span></div>
-          <div class="contador-digito"><p id="seg3"></p><span>seg</span></div>
-        </div>
-      </div>
-
-    </div>
-
-  </main>
-
-  <script src="main.js"></script>
-</body>
-</html>
+// LOOP
+setInterval(atualizar, 1000);
+atualizar();
